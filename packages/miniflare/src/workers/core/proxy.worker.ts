@@ -289,7 +289,22 @@ export class ProxyServer implements DurableObject {
 			}
 			assert(Array.isArray(args));
 			try {
-				if (["RpcProperty", "RpcStub"].includes(func.constructor.name)) {
+				if (func.constructor.name === "RpcProperty") {
+					result = func(...args);
+					// Wrap RpcPromise instances with a standard promise to support serialisation
+					result = new Promise((resolve, reject) =>
+						(result as Promise<any>)
+							.then((v) => {
+								// Drop `Symbol.dispose` and `Symbol.asyncDispose` so that the resulting value can be serialised.
+								if (v.hasOwnProperty(Symbol.dispose)) delete v[Symbol.dispose];
+								if (v.hasOwnProperty(Symbol.asyncDispose))
+									delete v[Symbol.asyncDispose];
+
+								resolve(v);
+							})
+							.catch(reject)
+					);
+				} else if (func.constructor.name === "RpcStub") {
 					// let's resolve RpcPromise instances right away (to support serialization)
 					result = await func(...args);
 				} else {

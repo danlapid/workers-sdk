@@ -821,6 +821,53 @@ test("Miniflare: service binding to named entrypoint", async (t) => {
 	});
 });
 
+test("Miniflare: service binding to named entrypoint that implement a method returning a plain object", async (t) => {
+	const mf = new Miniflare({
+		workers: [
+			{
+				name: "a",
+				serviceBindings: {
+					RPC_SERVICE: { name: "b", entrypoint: "RpcEntrypoint" },
+				},
+				compatibilityFlags: ["rpc"],
+				modules: true,
+				script: `
+				export default {
+					async fetch(request, env) {
+						const obj = await env.RPC_SERVICE.getObject();
+						return Response.json({ obj });
+					}
+				}
+				`,
+			},
+			{
+				name: "b",
+				modules: true,
+				script: `
+					import { WorkerEntrypoint } from "cloudflare:workers";
+
+					export class RpcEntrypoint extends WorkerEntrypoint {
+						getObject() {
+							return {
+								isPlainObject: true,
+								value: 123,
+							}
+						}
+					}
+				`,
+			},
+		],
+	});
+	t.teardown(() => mf.dispose());
+
+	const bindings = await mf.getBindings<{ RPC_SERVICE: any }>();
+	const obj = await bindings.RPC_SERVICE.getObject();
+	t.deepEqual(obj, {
+		isPlainObject: true,
+		value: 123,
+	});
+});
+
 test("Miniflare: custom outbound service", async (t) => {
 	const mf = new Miniflare({
 		workers: [
