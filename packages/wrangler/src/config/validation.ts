@@ -1222,6 +1222,14 @@ function normalizeAndValidateEnvironment(
 			isObjectWith("crons"),
 			{ crons: [] }
 		),
+		experimental_assets: inheritable(
+			diagnostics,
+			topLevelEnv,
+			rawEnv,
+			"experimental_assets",
+			validateAssetsConfig,
+			undefined
+		),
 		usage_model: inheritable(
 			diagnostics,
 			topLevelEnv,
@@ -2034,6 +2042,40 @@ const validateCflogfwdrBinding: ValidatorFn = (diagnostics, field, value) => {
 		"name",
 	]);
 
+	return isValid;
+};
+
+const validateAssetsConfig: ValidatorFn = (diagnostics, field, value) => {
+	if (value === undefined) {
+		return true;
+	}
+	if (!Array.isArray(value) || value === null) {
+		return false;
+	}
+	let isValid = true;
+	for (const assetConfig of value) {
+		if (typeof assetConfig !== "object") {
+			diagnostics.errors.push(
+				`Expected the \`experimental_assets\` field to be an object, but got ${typeof value}.`
+			);
+			isValid = false;
+		}
+		const { directory, binding, ...rest } = assetConfig;
+		if (typeof directory !== "string") {
+			diagnostics.errors.push(
+				`\`experimental_assets\` should have a string "directory" field.`
+			);
+			isValid = false;
+		}
+		if (binding && typeof binding !== "string") {
+			diagnostics.errors.push(
+				`The field \`experimental_assets.binding\` should be a string.`
+			);
+			isValid = false;
+		}
+
+		validateAdditionalProperties(diagnostics, field, Object.keys(rest), []);
+	}
 	return isValid;
 };
 

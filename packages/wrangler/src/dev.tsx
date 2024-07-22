@@ -1,5 +1,6 @@
 import assert from "node:assert";
 import events from "node:events";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import util from "node:util";
 import { isWebContainer } from "@webcontainer/env";
@@ -177,6 +178,12 @@ export function devOptions(yargs: CommonYargsArgv) {
 				requiresArg: true,
 			})
 			.option("assets", {
+				describe: "(Experimental) Static assets to be served",
+				type: "string",
+				requiresArg: true,
+				hidden: true,
+			})
+			.option("experimental-assets", {
 				describe: "(Experimental) Static assets to be served",
 				type: "string",
 				requiresArg: true,
@@ -765,6 +772,28 @@ export async function startDev(args: StartDevOptions) {
 			});
 		}
 
+		if (args.experimentalAssets || config.experimental_assets) {
+			args.forceLocal = true;
+			if (
+				args.experimentalAssets &&
+				!existsSync(path.resolve(process.cwd(), args.experimentalAssets))
+			) {
+				throw new UserError(
+					`The directory provided for the experimental-assets feature does not exist:\n` +
+						`${path.resolve(process.cwd(), args.experimentalAssets)}`
+				);
+			} else {
+				config.experimental_assets?.forEach((x) => {
+					if (!existsSync(path.resolve(process.cwd(), x.directory))) {
+						throw new UserError(
+							`The directory provided for the experimental-assets feature does not exist:\n` +
+								`${path.resolve(process.cwd(), x.directory)}`
+						);
+					}
+				});
+			}
+		}
+
 		const {
 			entry,
 			upstreamProtocol,
@@ -1141,6 +1170,7 @@ export async function validateDevServerSettings(
 			legacyAssets: args.legacyAssets,
 			script: args.script,
 			moduleRoot: args.moduleRoot,
+			experimentalAssets: args.experimentalAssets,
 		},
 		config,
 		"dev"
@@ -1186,8 +1216,11 @@ export async function validateDevServerSettings(
 	}
 
 	if (
-		(args.legacyAssets ?? config.legacy_assets) &&
-		(args.site ?? config.site)
+		(args.legacyAssets ||
+			config.legacy_assets ||
+			args.experimentalAssets ||
+			config.experimental_assets) &&
+		(args.site || config.site)
 	) {
 		throw new UserError(
 			"Cannot use Assets and Workers Sites in the same Worker."
