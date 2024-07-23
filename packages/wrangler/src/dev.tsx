@@ -184,7 +184,7 @@ export function devOptions(yargs: CommonYargsArgv) {
 				hidden: true,
 			})
 			.option("experimental-assets", {
-				describe: "(Experimental) Static assets to be served",
+				describe: "Static assets to be served",
 				type: "string",
 				requiresArg: true,
 				hidden: true,

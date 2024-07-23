@@ -110,7 +110,7 @@ export function deployOptions(yargs: CommonYargsArgv) {
 				hidden: true,
 			})
 			.option("experimental-assets", {
-				describe: "(Experimental) Static assets to be served",
+				describe: "Static assets to be served",
 				type: "string",
 				requiresArg: true,
 				hidden: true,
@@ -336,6 +336,10 @@ export async function deployHandler(
 					args.siteExclude
 				);
 
+	//TODO: decide what to do with multiple directories
+	const experimentalAssetsDirectory =
+		args.experimentalAssets ?? config.experimental_assets?.at(0)?.directory;
+
 	if (!args.dryRun) {
 		await standardPricingWarning(config);
 	}
@@ -360,6 +364,7 @@ export async function deployHandler(
 		jsxFragment: args.jsxFragment,
 		tsconfig: args.tsconfig,
 		routes: args.routes,
+		experimentalAssets: experimentalAssetsDirectory,
 		assetPaths,
 		legacyEnv: isLegacyEnv(config),
 		minify: args.minify,
