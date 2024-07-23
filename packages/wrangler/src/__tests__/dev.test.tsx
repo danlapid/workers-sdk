@@ -1418,7 +1418,7 @@ describe("wrangler dev", () => {
 				runWrangler("dev --experimental-assets abc")
 			).rejects.toThrow(
 				new RegExp(
-					"^The directory provided for the experimental-assets feature does not exist:[Ss]*"
+					'^The directory specified by the "--experimental-assets" command line argument does not exist:[Ss]*'
 				)
 			);
 		});
@@ -1435,7 +1435,7 @@ describe("wrangler dev", () => {
 			fs.writeFileSync("index.js", `export default {};`);
 			await expect(runWrangler("dev")).rejects.toThrow(
 				new RegExp(
-					"^The directory provided for the experimental-assets feature does not exist:[Ss]*"
+					"^The directory specified by the `experimental_assets` field in your configuration file does not exist:[Ss]*"
 				)
 			);
 		});

@@ -293,7 +293,7 @@ export async function deployHandler(
 		!existsSync(path.resolve(process.cwd(), args.experimentalAssets))
 	) {
 		throw new UserError(
-			`The directory provided for the experimental-assets feature does not exist:\n` +
+			`The directory specified by the "--experimental-assets" command line argument does not exist:\n` +
 				`${path.resolve(process.cwd(), args.experimentalAssets)}`
 		);
 	} else {
@@ -301,7 +301,7 @@ export async function deployHandler(
 			const assetDir = path.resolve(process.cwd(), x.directory);
 			if (!existsSync(assetDir)) {
 				throw new UserError(
-					`The directory provided for the experimental-assets feature does not exist:\n` +
+					`The directory specified by the \`experimental_assets\` field in your configuration file does not exist:\n` +
 						`${assetDir}`
 				);
 			}

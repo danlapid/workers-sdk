@@ -4183,7 +4183,7 @@ addEventListener('fetch', event => {});`
 				runWrangler("deploy --experimental-assets abc")
 			).rejects.toThrow(
 				new RegExp(
-					"^The directory provided for the experimental-assets feature does not exist:[Ss]*"
+					'^The directory specified by the "--experimental-assets" command line argument does not exist:[Ss]*'
 				)
 			);
 		});
@@ -4195,7 +4195,7 @@ addEventListener('fetch', event => {});`
 			writeWorkerSource();
 			await expect(runWrangler("deploy")).rejects.toThrow(
 				new RegExp(
-					"^The directory provided for the experimental-assets feature does not exist:[Ss]*"
+					"^The directory specified by the `experimental_assets` field in your configuration file does not exist:[Ss]*"
 				)
 			);
 		});

@@ -779,15 +779,16 @@ export async function startDev(args: StartDevOptions) {
 				!existsSync(path.resolve(process.cwd(), args.experimentalAssets))
 			) {
 				throw new UserError(
-					`The directory provided for the experimental-assets feature does not exist:\n` +
+					`The directory specified by the "--experimental-assets" command line argument does not exist:\n` +
 						`${path.resolve(process.cwd(), args.experimentalAssets)}`
 				);
 			} else {
 				config.experimental_assets?.forEach((x) => {
-					if (!existsSync(path.resolve(process.cwd(), x.directory))) {
+					const assetDir = path.resolve(process.cwd(), x.directory);
+					if (!existsSync(assetDir)) {
 						throw new UserError(
-							`The directory provided for the experimental-assets feature does not exist:\n` +
-								`${path.resolve(process.cwd(), x.directory)}`
+							`The directory specified by the \`experimental_assets\` field in your configuration file does not exist:\n` +
+								`${assetDir}`
 						);
 					}
 				});

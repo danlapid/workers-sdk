@@ -2056,25 +2056,28 @@ const validateAssetsConfig: ValidatorFn = (diagnostics, field, value) => {
 	for (const assetConfig of value) {
 		if (typeof assetConfig !== "object") {
 			diagnostics.errors.push(
-				`Expected the \`experimental_assets\` field to be an object, but got ${typeof value}.`
+				`The field \`experimental_assets\` should be an object, but got ${typeof value}.`
 			);
 			isValid = false;
 		}
-		const { directory, binding, ...rest } = assetConfig;
-		if (typeof directory !== "string") {
+
+		if (!isRequiredProperty(assetConfig, "directory", "string")) {
 			diagnostics.errors.push(
 				`\`experimental_assets\` should have a string "directory" field.`
 			);
 			isValid = false;
 		}
-		if (binding && typeof binding !== "string") {
+		if (!isOptionalProperty(assetConfig, "binding", "string")) {
 			diagnostics.errors.push(
 				`The field \`experimental_assets.binding\` should be a string.`
 			);
 			isValid = false;
 		}
 
-		validateAdditionalProperties(diagnostics, field, Object.keys(rest), []);
+		validateAdditionalProperties(diagnostics, field, Object.keys(assetConfig), [
+			"directory",
+			"binding",
+		]);
 	}
 	return isValid;
 };
