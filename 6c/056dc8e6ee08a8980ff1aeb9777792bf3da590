@@ -1,0 +1,53 @@
+.changeset/durable-object-memory-limit.md
+  s_aab93ba58aaf8f::t_d055457a968fee 1-21
+packages/config/src/__tests__/convert.test.ts
+  s_aab93ba58aaf8f::t_240f1846de8d4d 60-72
+packages/config/src/convert.ts
+  s_aab93ba58aaf8f::t_935b9b01c7abb9 257-259
+packages/config/src/schema.ts
+  s_aab93ba58aaf8f::t_d0eceb1195eae6 668-670
+packages/config/src/types.ts
+  s_aab93ba58aaf8f::t_d3481b5351617a 508-514
+packages/workers-utils/src/config/environment.ts
+  s_aab93ba58aaf8f::t_1cf6c6aca78a79 1970-1977
+packages/workers-utils/src/config/validation.ts
+  s_aab93ba58aaf8f::t_d5e2f4170a264e 2254-2261,6511-6512,6534-6542,6973-6981,8125-8159
+packages/workers-utils/src/construct-wrangler-config.ts
+  s_aab93ba58aaf8f::t_8706430a9437c7 42-48
+packages/workers-utils/src/types.ts
+  s_aab93ba58aaf8f::t_27c0c217d80a8b 407
+packages/workers-utils/src/worker.ts
+  s_aab93ba58aaf8f::t_51c2f7fc99f2f8 484
+packages/workers-utils/tests/config/validation/normalize-and-validate-config.test.ts
+  s_aab93ba58aaf8f::t_a0e56b19452611 14305-14373,14509-14552
+packages/wrangler/src/__tests__/create-worker-upload-form/metadata.test.ts
+  s_aab93ba58aaf8f::t_5f6ae3dbf13ec3 192-197
+packages/wrangler/src/__tests__/deploy/durable-objects.test.ts
+  s_aab93ba58aaf8f::t_da52302211ad15 680-729
+packages/wrangler/src/__tests__/init.test.ts
+  s_aab93ba58aaf8f::t_c7a729f2bc9d95 1265-1287
+packages/wrangler/src/__tests__/preview-config.test.ts
+  s_aab93ba58aaf8f::t_061fcfe61122cf 176,195
+packages/wrangler/src/__tests__/preview.test.ts
+  s_aab93ba58aaf8f::t_6257ec5bedcb35 7061,7076-7080,7160-7163
+packages/wrangler/src/__tests__/versions/versions.upload.test.ts
+  s_aab93ba58aaf8f::t_fcf6a3bad07fbb 1894-1916
+packages/wrangler/src/preview/preview-config.ts
+  s_aab93ba58aaf8f::t_c04afd95907b95 204
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6c056dc8e6ee08a8980ff1aeb9777792bf3da590",
+  "prompts": {},
+  "sessions": {
+    "s_aab93ba58aaf8f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d827cfbd-d500-4733-ad8d-4cbf0742e7d3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Dan Lapid <dlapid@cloudflare.com>"
+    }
+  }
+}
