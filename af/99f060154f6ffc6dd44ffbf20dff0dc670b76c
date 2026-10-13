@@ -1,0 +1,27 @@
+packages/miniflare/src/runtime/index.ts
+  s_dadaf0660bfcbe::t_86c7a6f472e7af 13-16,18,215-235,238,368-370
+packages/miniflare/test/index.spec.ts
+  s_dadaf0660bfcbe::t_56614a37ac1855 449-480
+packages/miniflare/src/runtime/structured-logs.ts
+  s_dadaf0660bfcbe::t_d66b7ea1369c89 65-102,138,166-172
+.changeset/miniflare-rust-server-address-in-use.md
+  s_dadaf0660bfcbe::t_910c6aa7b5bad5 1-7
+packages/miniflare/test/runtime/structured-logs.spec.ts
+  s_dadaf0660bfcbe::t_eea0d906a3e744 6-9,161-234
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "af99f060154f6ffc6dd44ffbf20dff0dc670b76c",
+  "prompts": {},
+  "sessions": {
+    "s_dadaf0660bfcbe": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8d63e3f9-8a77-4e9b-af79-b96d68a8b116",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Dan Lapid <dlapid@cloudflare.com>"
+    }
+  }
+}
